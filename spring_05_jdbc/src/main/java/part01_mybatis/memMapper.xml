@@ -12,6 +12,20 @@
  		INSERT INTO mem(num, name, age, loc)
  		VALUES(mem_num_seq.nextval, #{name}, #{age}, #{loc})
  	</insert>
+ 	
+ 	<select id="one" parameterType="int" resultType="part01_mybatis.MemDTO">
+ 		SELECT * FROM mem WHERE num = #{num}
+ 	</select>
+ 	
+ 	<update id="upt" parameterType="part01_mybatis.MemDTO">
+ 		UPDATE mem SET name = #{name}, age=#{age}, loc = #{loc}
+ 		WHERE num = #{num}
+ 	</update>
+ 	
+ 	<delete id="del" parameterType="int">
+ 		DELETE FROM mem WHERE num = #{num}
+ 	</delete>
+ 	
  </mapper>
  
  

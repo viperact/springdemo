@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- 패키지안의 클래스들 자동 bean 설정후 컨테이너에 삽입 -->
+	<context:component-scan base-package="part01_mybatis"></context:component-scan>
 
 	<!-- [1] DateSource 빈 선언 -->
+	<!-- 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName"
@@ -14,7 +19,7 @@
 		<property name="username" value="hr" />
 		<property name="password" value="a1234" />
 	</bean>
-
+	-->
 	<!-- [2] SqlSessionFactoryBean 빈선언 -->
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -34,20 +39,26 @@
 	</bean>
 	
 	<!-- [4] MemDaoImp 빈 선언 -->
+	<!-- 
 	<bean id="dao" class="part01_mybatis.MemDaoImp">
 		<property name="sqlSession" ref="sqlSession"/>
 	</bean>
+	-->
 	
 	<!-- [5] MemController 빈 선언 -->
+	<!-- 
 	<bean class="part01_mybatis.MemController">
 		<property name="memDAO" ref="dao"/>
 	</bean>
+	-->
 	
 	<!-- [6] View 빈 선언 -->
+	<!-- 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/"/>
 		<property name="suffix" value=".jsp"/>
 	</bean>
+	-->
 </beans>
 
 

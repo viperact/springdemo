@@ -3,8 +3,13 @@ package part01_mybatis;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class MemDaoImp  implements MemDAO{
+	
+	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
 	public MemDaoImp() {
@@ -23,7 +28,7 @@ public class MemDaoImp  implements MemDAO{
 
 	@Override
 	public void insertMethod(MemDTO dto) {
-		
+		sqlSession.insert("mem.ins", dto);
 		
 	}
 
@@ -35,20 +40,20 @@ public class MemDaoImp  implements MemDAO{
 
 	@Override
 	public void updateMethod(MemDTO dto) {
-		
+		sqlSession.update("mem.upt", dto);
 		
 	}
 
 	@Override
 	public void deleteMethod(int num) {
-		
+		sqlSession.delete("mem.del", num);
 		
 	}
 
 	@Override
 	public MemDTO one(int num) {
 		
-		return null;
+		return sqlSession.selectOne("mem.one", num);
 	}
 
 	@Override
