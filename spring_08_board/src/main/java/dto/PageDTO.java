@@ -25,17 +25,19 @@ public class PageDTO {
 		this.currentPage = currentPage;
 		this.totalCount = totalCount;
 
+		// 총 페이지 수
+		totalPage = totalCount / blockCount + (totalCount % blockCount == 0 ? 0 : 1);
+		if (totalPage < currentPage)
+			this.currentPage = totalPage;
+
 		// 시작레코드
-		startRow = (currentPage - 1) * blockCount + 1;
+		startRow = (this.currentPage - 1) * blockCount + 1;
 
 		// 끝레코드
 		endRow = startRow + blockCount - 1;
 
-		// 총 페이지 수
-		totalPage = totalCount / blockCount + (totalCount % blockCount == 0 ? 0 : 1);
-
 		// 시작 페이지
-		startPage = (int) ((currentPage - 1) / blockPage) * blockPage + 1;
+		startPage = (int) ((this.currentPage - 1) / blockPage) * blockPage + 1;
 
 		// 끝 페이지
 		endPage = startPage + blockPage - 1;
@@ -43,7 +45,7 @@ public class PageDTO {
 			endPage = totalPage;
 
 		// 리스트에서의 출력번호
-		number = totalCount - (currentPage - 1) * blockCount;
+		number = totalCount - (this.currentPage - 1) * blockCount;
 
 	}
 

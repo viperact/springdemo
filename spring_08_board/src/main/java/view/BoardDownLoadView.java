@@ -41,7 +41,7 @@ public class BoardDownLoadView extends AbstractView{
 		String str = URLEncoder.encode(fileName, "UTF-8"); //공백이 + 로 출력됨
 		
 		// + 를 공백으로 바꿔주는 작업 (원본파일명에서 공백이 있을 때, +표시가 되므로 공백으로 처리해줌)
-		str = str.replace("\\+", "%20");
+		str = str.replaceAll("\\+", "%20");
 		
 		//컨텐츠 타입을 지정
 		response.setContentType("application/octet-stream");

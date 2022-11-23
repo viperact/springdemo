@@ -58,7 +58,7 @@ public class BoardController {
 	@RequestMapping(value = "/write.sb", method = RequestMethod.GET)
 	public ModelAndView writeMethod(BoardDTO dto, PageDTO pv, ModelAndView mav) {
 		if (dto.getRef() != 0) { // 답변글이면
-			mav.addObject("currntPage", pv.getCurrentPage());
+			mav.addObject("currentPage", pv.getCurrentPage());
 			mav.addObject("dto", dto);
 		}
 		mav.setViewName("board/write");
@@ -75,16 +75,47 @@ public class BoardController {
 		}
 
 		dto.setIp(request.getRemoteAddr()); // 현재 서버에 접속한 클라이언트의 ip주소를 가져옴
-
-		service.insertProcess(dto);
 		
-		//답변글이면
+		service.insertProcess(dto);
+
+		// 답변글이면
 		if (dto.getRef() != 0) {
 			return "redirect:/list.sb?currentPage=" + pv.getCurrentPage();
 		} else {
 			return "redirect:/list.sb";
 		}
 	}// end writeProMethod()
+	
+	@RequestMapping(value = "/update.sb", method = RequestMethod.GET)
+	public ModelAndView updateMethod(int num, int currentPage, ModelAndView mav) {
+			mav.addObject("dto", service.updateSelectProcess(num));
+			mav.addObject("currentPage", currentPage);
+			mav.setViewName("board/update");
+		return mav;
+	}//end updateMethod()
+	
+	@RequestMapping(value = "/update.sb", method = RequestMethod.POST)
+	public String updateProMethod(BoardDTO dto, int currentPage, HttpServletRequest request) {
+		MultipartFile file = dto.getFilename();
+		if(!file.isEmpty()) {
+			UUID random = saveCopyFile(file, request);
+			dto.setUpload(random + "_" + file.getOriginalFilename());
+		}
+		service.updateProcess(dto, urlPath(request));
+		return "redirect:/list.sb?currentPage=" + currentPage;
+	}//end updateProMethod
+	
+	@RequestMapping(value = "/delete.sb")
+	public String deleteMethod(int num, int currentPage, HttpServletRequest request) {
+		service.deleteProcess(num, urlPath(request));
+		
+		int totalRecord = service.countProcess();
+		this.pdto = new PageDTO(this.currentPage, totalRecord);
+		
+		return "redirect:/list.sb?currentPage=" + this.pdto.getCurrentPage();
+	}//end deleteMethod
+	
+	
 
 	private UUID saveCopyFile(MultipartFile file, HttpServletRequest request) {
 		String fileName = file.getOriginalFilename();
@@ -121,37 +152,17 @@ public class BoardController {
 
 	@RequestMapping("/view.sb")
 	public ModelAndView viewMethod(int currentPage, int num, ModelAndView mav) {
-		mav.addObject("dto",service.contentProcess(num));
+		mav.addObject("dto", service.contentProcess(num));
 		mav.addObject("currentPage", currentPage);
 		mav.setViewName("board/view");
 		return mav;
-	}//end viewMethod()
-	
-	
+	}// end viewMethod()
+
 	@RequestMapping("/contentdownload.sb")
 	public ModelAndView downMethod(int num, ModelAndView mav) {
 		mav.addObject("num", num);
 		mav.setViewName("download");
 		return mav;
-	}//end downMethod()
-	
+	}// end downMethod()
+
 }// end class
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

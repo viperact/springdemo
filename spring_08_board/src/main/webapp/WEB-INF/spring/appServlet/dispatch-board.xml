@@ -7,6 +7,7 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
+
 	<!-- [1] DateSource 빈 선언 -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -17,7 +18,6 @@
 		<property name="username" value="hr" />
 		<property name="password" value="a1234" />
 	</bean>
-
 
 	<!-- [2] SqlSessionFactoryBean 빈 선언 -->
 	<bean id="sqlSessionFactory"
