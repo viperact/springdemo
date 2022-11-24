@@ -2,6 +2,7 @@ $(document).ready(function() {
 	$('#btn').on('click', process);
 });
 
+
 function process() {
 	$.ajax({
 		type:'GET',
@@ -10,6 +11,7 @@ function process() {
 		success:viewMessage
 	});
 }
+
 
 
 function viewMessage(res){
