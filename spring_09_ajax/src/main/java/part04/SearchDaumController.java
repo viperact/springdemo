@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class SearchDaumController {
+	
 	public SearchDaumController() {
 
 	}
@@ -56,4 +57,4 @@ public class SearchDaumController {
 }
 
 
-
+  
